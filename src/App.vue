@@ -13,8 +13,11 @@ import HelloWorld from './components/HelloWorld.vue'
     <a href="https://vuejs.org/" target="_blank">
       <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
+    <a href="https://element-plus.org/" target="_blank">
+      <img src="./assets/element.svg" class="logo element" alt="Element logo" />
+    </a>
   </div>
-  <HelloWorld msg="Electron + Vite + Vue" />
+  <HelloWorld msg="Electron + Vite + Vue + Element Plus" />
   <div class="flex-center">
     Place static files into the <code>/public</code> folder
     <img style="width: 2.4em; margin-left: .4em;" src="/logo.svg" alt="Logo">
@@ -45,5 +48,8 @@ import HelloWorld from './components/HelloWorld.vue'
 
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+.logo.element:hover {
+  filter: drop-shadow(0 0 2em #5a9cf8);
 }
 </style>

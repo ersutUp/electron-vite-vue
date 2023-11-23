@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ElButton, ElIcon, ElInput } from 'element-plus';
 import { ref } from 'vue'
 
 defineProps<{ msg: string }>()
@@ -10,7 +11,10 @@ const count = ref(0)
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
+    <ElButton type="primary" @click="count++" >
+      <el-icon><Pointer /></el-icon>
+      count is {{ count }}
+    </ElButton>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
