@@ -8,7 +8,7 @@ import pkg from './package.json'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-
+import {resolve} from 'path';
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
   rmSync('dist-electron', { recursive: true, force: true })
@@ -92,5 +92,11 @@ export default defineConfig(({ command }) => {
       }
     })(),
     clearScreen: false,
+    resolve:{
+      // 配置路径别名
+      alias: {
+        '@': resolve(__dirname,'src'),
+      },
+    }
   }
 })

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from '@/components/HelloWorld.vue'
+import a from "@/App.vue"
 </script>
 
 <template>
@@ -11,10 +12,10 @@ import HelloWorld from './components/HelloWorld.vue'
       <img src="./assets/vite.svg" class="logo" alt="Vite logo" />
     </a>
     <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+      <img src="@/assets/vue.svg" class="logo vue" alt="Vue logo" />
     </a>
     <a href="https://element-plus.org/" target="_blank">
-      <img src="./assets/element.svg" class="logo element" alt="Element logo" />
+      <img src="@/assets/element.svg" class="logo element" alt="Element logo" />
     </a>
   </div>
   <HelloWorld msg="Electron + Vite + Vue + Element Plus" />
