@@ -24,12 +24,14 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@iconify-json/ep": "^1.1.13",
     "@vitejs/plugin-vue": "^4.3.3",
     "electron": "^26.0.0",
     "electron-builder": "^24.6.3",
     "tree-kill": "^1.2.2",
     "typescript": "^5.1.6",
     "unplugin-auto-import": "^0.16.7",
+    "unplugin-icons": "^0.18.1",
     "unplugin-vue-components": "^0.25.2",
     "vite": "^4.4.9",
     "vite-plugin-electron": "^0.15.3",

@@ -8,7 +8,10 @@ import pkg from './package.json'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import {resolve} from 'path';
+import { resolve } from 'path';
+import IconsResolver from "unplugin-icons/resolver"
+import Icons from "unplugin-icons/vite"
+
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
   rmSync('dist-electron', { recursive: true, force: true })
@@ -77,11 +80,24 @@ export default defineConfig(({ command }) => {
       renderer(),
       //自动导入
       AutoImport({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          ElementPlusResolver(),
+          // 自动导入图标组件
+          IconsResolver({
+            prefix: 'Icon',
+          }),],
       }),
       Components({
-        dts:true,
-        resolvers: [ElementPlusResolver()],
+        dts: true,
+        resolvers: [
+          ElementPlusResolver(),
+          // 自动注册图标组件
+          IconsResolver({
+            enabledCollections: ['ep'],
+          }),],
+      }),
+      Icons({
+        autoInstall: true,
       }),
     ],
     server: process.env.VSCODE_DEBUG && (() => {
@@ -92,10 +108,10 @@ export default defineConfig(({ command }) => {
       }
     })(),
     clearScreen: false,
-    resolve:{
+    resolve: {
       // 配置路径别名
       alias: {
-        '@': resolve(__dirname,'src'),
+        '@': resolve(__dirname, 'src'),
       },
     }
   }
