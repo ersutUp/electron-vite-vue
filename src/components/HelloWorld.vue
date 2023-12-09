@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ElButton, ElIcon, ElInput } from 'element-plus';
+import { ElButton, ElIcon, ElInput, ElNotification } from 'element-plus';
 import { ref } from 'vue'
 import { PublicInfo } from '@/../public/pojo/Info'
 import { ipcRenderer } from 'electron';
+import { UserInfo, useUserStore } from "@/store/UserStore"
+import { MutationType, storeToRefs } from "pinia"
 
 defineProps<{ msg: string }>()
 
@@ -13,8 +15,26 @@ const sendInfo = () => {
   const publicInfo: PublicInfo = {
     name: '测试公共TS'
   }
-  ipcRenderer.send("testPunlic",JSON.stringify(publicInfo))
+  ipcRenderer.send("testPunlic", JSON.stringify(publicInfo))
 }
+
+const userStore = useUserStore()
+
+const { user } = storeToRefs(userStore);
+
+const changeUser = () => {
+  userStore.ersut()
+}
+
+//订阅商店
+userStore.$subscribe((mutation, state) => {
+  const type:MutationType = mutation.type;
+  ElNotification.info({
+    title: '用户年龄改变',
+    message: `新年龄：${state.user.age}`,
+    type: 'success'
+  })
+})
 
 </script>
 
@@ -28,8 +48,18 @@ const sendInfo = () => {
       </el-icon>
       count is {{ count }}
     </ElButton>
-    <ElButton @click="sendInfo()">
+    <ElButton @click="sendInfo">
       测试公共TS
+    </ElButton>
+    <p>
+      userName: {{ user.name }}<br />
+      userName: {{ user.age }}
+    </p>
+    <ElButton @click="changeUser">
+      调用商店方法
+    </ElButton>
+    <ElButton @click="user.age++">
+      修改商店属性
     </ElButton>
     <p>
       Edit
