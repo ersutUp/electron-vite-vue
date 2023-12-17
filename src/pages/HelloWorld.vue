@@ -3,12 +3,18 @@ import { ElButton, ElIcon, ElInput, ElNotification } from 'element-plus';
 import { ref } from 'vue'
 import { PublicInfo } from '@/../public/pojo/Info'
 import { ipcRenderer } from 'electron';
-import { UserInfo, useUserStore } from "@/store/UserStore"
-import { MutationType, storeToRefs } from "pinia"
+import { useRoute, useRouter } from 'vue-router';
 
-defineProps<{ msg: string }>()
+const msg: string = "Electron + Vite + Vue + Element Plus"
 
 const count = ref(0)
+
+const router = useRouter()
+const route = useRoute()
+
+
+
+console.log(route.meta.title);
 
 //测试公共ts 
 const sendInfo = () => {
@@ -18,23 +24,13 @@ const sendInfo = () => {
   ipcRenderer.send("testPunlic", JSON.stringify(publicInfo))
 }
 
-const userStore = useUserStore()
-
-const { user } = storeToRefs(userStore);
-
-const changeUser = () => {
-  userStore.ersut()
-}
-
-//订阅商店
-userStore.$subscribe((mutation, state) => {
-  const type:MutationType = mutation.type;
-  ElNotification.info({
-    title: '用户年龄改变',
-    message: `新年龄：${state.user.age}`,
-    type: 'success'
+const toTestStorePage = () => {
+  router.push('/test/store').then(() => {
+    console.log('跳转成功')
+  }).catch(() => {
+    console.log('跳转失败')
   })
-})
+}
 
 </script>
 
@@ -51,19 +47,12 @@ userStore.$subscribe((mutation, state) => {
     <ElButton @click="sendInfo">
       测试公共TS
     </ElButton>
-    <p>
-      userName: {{ user.name }}<br />
-      userName: {{ user.age }}
-    </p>
-    <ElButton @click="changeUser">
-      调用商店方法
-    </ElButton>
-    <ElButton @click="user.age++">
-      修改商店属性
+    <ElButton @click="toTestStorePage">
+      打开商店测试页面
     </ElButton>
     <p>
       Edit
-      <code>components/HelloWorld.vue</code> to test HMR
+      <code>pages/HelloWorld.vue</code> to test HMR
     </p>
   </div>
 
