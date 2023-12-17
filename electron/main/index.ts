@@ -54,6 +54,15 @@ async function createWindow() {
       contextIsolation: false,
     },
   })
+  
+  //解决跨域请求
+  win.webContents.session.webRequest.onBeforeSendHeaders((details, callback) => {
+    const urlx: URL = new URL(details.url)
+    callback({ requestHeaders: { Origin: urlx.origin, ...details.requestHeaders } })
+  })
+  win.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+    callback({ responseHeaders: { 'Access-Control-Allow-Origin': ["*"], 'Access-Control-Allow-Methods': ["*"], "Access-Control-Allow-Headers": ["*"], ...details.responseHeaders } })
+  })
 
   if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
     win.loadURL(url)
