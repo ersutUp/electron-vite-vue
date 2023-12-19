@@ -1,4 +1,4 @@
-import { app, BrowserWindow, shell, ipcMain, IpcMainEvent } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, IpcMainEvent, Menu } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import { PublicInfo } from '../../public/pojo/Info'
@@ -42,6 +42,8 @@ const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = join(process.env.DIST, 'index.html')
 
 async function createWindow() {
+  //关闭菜单栏
+  Menu.setApplicationMenu(null);
   win = new BrowserWindow({
     title: 'Main window',
     icon: join(process.env.VITE_PUBLIC, 'favicon.ico'),
@@ -54,7 +56,12 @@ async function createWindow() {
       contextIsolation: false,
     },
   })
-  
+
+  //隐藏滚动条
+  win.webContents.insertCSS("::-webkit-scrollbar { display:none }")
+  //阻止用户选择文本
+  win.webContents.insertCSS("body{ -webkit-user-select:none }")
+
   //解决跨域请求
   win.webContents.session.webRequest.onBeforeSendHeaders((details, callback) => {
     const urlx: URL = new URL(details.url)
@@ -127,7 +134,7 @@ ipcMain.handle('open-win', (_, arg) => {
 })
 
 //测试公共类
-ipcMain.on("testPunlic",(e:IpcMainEvent,arg:any) => {
-  const publicInfo:PublicInfo = JSON.parse(arg);
+ipcMain.on("testPunlic", (e: IpcMainEvent, arg: any) => {
+  const publicInfo: PublicInfo = JSON.parse(arg);
   console.info(publicInfo);
 })
