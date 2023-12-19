@@ -1,6 +1,7 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, IpcMainEvent } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
+import { PublicInfo } from '../../public/pojo/Info'
 
 // The built directory structure
 //
@@ -123,4 +124,10 @@ ipcMain.handle('open-win', (_, arg) => {
   } else {
     childWindow.loadFile(indexHtml, { hash: arg })
   }
+})
+
+//测试公共类
+ipcMain.on("testPunlic",(e:IpcMainEvent,arg:any) => {
+  const publicInfo:PublicInfo = JSON.parse(arg);
+  console.info(publicInfo);
 })

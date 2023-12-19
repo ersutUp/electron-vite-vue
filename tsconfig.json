@@ -11,9 +11,13 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*":["./src/*"]
+    },
   },
-  "include": ["src"],
+  "include": ["src", "electron", "public"],
   "references": [
     { "path": "./tsconfig.node.json" }
   ]

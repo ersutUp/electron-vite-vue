@@ -5,6 +5,12 @@ import electron from 'vite-plugin-electron'
 import renderer from 'vite-plugin-electron-renderer'
 import { notBundle } from 'vite-plugin-electron/plugin'
 import pkg from './package.json'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { resolve } from 'path';
+import IconsResolver from "unplugin-icons/resolver"
+import Icons from "unplugin-icons/vite"
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
@@ -72,6 +78,27 @@ export default defineConfig(({ command }) => {
       ]),
       // Use Node.js API in the Renderer process
       renderer(),
+      //自动导入
+      AutoImport({
+        resolvers: [
+          ElementPlusResolver(),
+          // 自动导入图标组件
+          IconsResolver({
+            prefix: 'Icon',
+          }),],
+      }),
+      Components({
+        dts: true,
+        resolvers: [
+          ElementPlusResolver(),
+          // 自动注册图标组件
+          IconsResolver({
+            enabledCollections: ['ep'],
+          }),],
+      }),
+      Icons({
+        autoInstall: true,
+      }),
     ],
     server: process.env.VSCODE_DEBUG && (() => {
       const url = new URL(pkg.debug.env.VITE_DEV_SERVER_URL)
@@ -81,5 +108,11 @@ export default defineConfig(({ command }) => {
       }
     })(),
     clearScreen: false,
+    resolve: {
+      // 配置路径别名
+      alias: {
+        '@': resolve(__dirname, 'src'),
+      },
+    }
   }
 })
