@@ -1,56 +1,52 @@
 <script setup lang="ts">
-import HelloWorld from '@/components/HelloWorld.vue'
-import a from "@/App.vue"
+import LeftMenu from '@/components/LeftMenu.vue'
 </script>
 
 <template>
-  <div>
-    <a href="https://www.electronjs.org/" target="_blank">
-      <img src="./assets/electron.svg" class="logo electron" alt="Electron logo" />
-    </a>
-    <a href="https://vitejs.dev/" target="_blank">
-      <img src="./assets/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="@/assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-    <a href="https://element-plus.org/" target="_blank">
-      <img src="@/assets/element.svg" class="logo element" alt="Element logo" />
-    </a>
+  <!-- 左侧菜单 -->
+  <div class="left">
+    <LeftMenu />
   </div>
-  <RouterView></RouterView>
-  <div class="flex-center">
-    Place static files into the <code>/public</code> folder
-    <img style="width: 2.4em; margin-left: .4em;" src="/logo.svg" alt="Logo">
+
+  <!-- 主体内容 -->
+  <div class="main">
+    <div class="content">
+      <RouterView></RouterView>
+    </div>
   </div>
 </template>
-
 <style>
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.left {
+  width: 80px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  display: block;
+  background-color: #333;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.main {
+  position: absolute;
+  background-color: #f0f2f5;
+  left: 80px;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  /* padding: 3px; */
 }
 
-.logo.electron:hover {
-  filter: drop-shadow(0 0 2em #9FEAF9);
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-.logo.element:hover {
-  filter: drop-shadow(0 0 2em #5a9cf8);
+.main .content {
+  margin: 10px;
+  padding: 10px;
+  height: calc(100% - 40px);
+  width: auto;
+  background-color: #ffffff;
+  border-radius: 5px;
+  /* box-sizing: border-box;
+  box-shadow: 0 5px 10px #ddd;
+  border-radius:5px;
+  border: 1px solid #ddd; */
+  overflow-y: scroll;
 }
 </style>
